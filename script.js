@@ -4,6 +4,8 @@ let img = document.getElementById('bird-1');
 let sound_point = new Audio('sounds effect/point.mp3');
 let sound_die = new Audio('sounds effect/die.mp3');
 
+let bird_dy = 0;
+
 // getting bird element properties
 let bird_props = bird.getBoundingClientRect();
 
@@ -43,7 +45,7 @@ document.addEventListener('touchstart', () => {
         play();
     }
 });
-let bird_dy = 0;
+
 bird.addEventListener('touchstart', (e) => {
     if (game_state != 'Play') return;
 
