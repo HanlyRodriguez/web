@@ -20,19 +20,6 @@ let game_state = 'Start';
 img.style.display = 'none';
 message.classList.add('messageStyle');
 
-document.addEventListener('touchstart', () => {
-    if (game_state != 'Play') {
-        img.style.display = 'block';
-        bird_dy = -7.6;  // Hacer que el pájaro salte cuando se toca
-        game_state = 'Play';
-        message.innerHTML = '';
-        score_title.innerHTML = 'Puntaje : ';
-        score_val.innerHTML = '0';
-        message.classList.remove('messageStyle');
-        play();
-    }
-});
-
 
 document.addEventListener('touchstart', () => {
     if (game_state != 'Play') {
