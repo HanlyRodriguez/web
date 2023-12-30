@@ -20,10 +20,10 @@ let game_state = 'Start';
 img.style.display = 'none';
 message.classList.add('messageStyle');
 
-document.addEventListener('keydown', (e) => {
-    if (e.key == 'Enter' && game_state != 'Play') {
+document.addEventListener('touchstart', () => {
+    if (game_state != 'Play') {
         img.style.display = 'block';
-        bird.style.top = '40vh';
+        bird_dy = -7.6;  // Hacer que el pájaro salte cuando se toca
         game_state = 'Play';
         message.innerHTML = '';
         score_title.innerHTML = 'Puntaje : ';
@@ -32,6 +32,7 @@ document.addEventListener('keydown', (e) => {
         play();
     }
 });
+
 
 document.addEventListener('touchstart', () => {
     if (game_state != 'Play') {
