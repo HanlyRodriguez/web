@@ -19,11 +19,20 @@ img.style.display = 'none';
 message.classList.add('messageStyle');
 
 document.addEventListener('keydown', (e) => {
-    
     if(e.key == 'Enter' && game_state != 'Play'){
-        document.querySelectorAll('.pipe_sprite').forEach((e) => {
-            e.remove();
-        });
+        img.style.display = 'block';
+        bird.style.top = '40vh';
+        game_state = 'Play';
+        message.innerHTML = '';
+        score_title.innerHTML = 'Puntaje : ';
+        score_val.innerHTML = '0';
+        message.classList.remove('messageStyle');
+        play();
+    }
+});
+
+document.addEventListener('touchstart', () => {
+    if (game_state != 'Play') {
         img.style.display = 'block';
         bird.style.top = '40vh';
         game_state = 'Play';
@@ -136,4 +145,5 @@ function play(){
     }
     requestAnimationFrame(create_pipe);
 }
+
 
