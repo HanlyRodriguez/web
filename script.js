@@ -20,7 +20,7 @@ message.classList.add('messageStyle');
 
 document.addEventListener('keydown', (e) => {
     
-    if(game_state != 'Play'){
+    if(e.key == 'Enter' && game_state != 'Play'){
         document.querySelectorAll('.pipe_sprite').forEach((e) => {
             e.remove();
         });
@@ -28,7 +28,7 @@ document.addEventListener('keydown', (e) => {
         bird.style.top = '40vh';
         game_state = 'Play';
         message.innerHTML = '';
-        score_title.innerHTML = 'Score : ';
+        score_title.innerHTML = 'Puntaje : ';
         score_val.innerHTML = '0';
         message.classList.remove('messageStyle');
         play();
@@ -49,7 +49,7 @@ function play(){
             }else{
                 if(bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width && bird_props.left + bird_props.width > pipe_sprite_props.left && bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height && bird_props.top + bird_props.height > pipe_sprite_props.top){
                     game_state = 'End';
-                    message.innerHTML = 'Game Over'.fontcolor('red') + '<br>Press Enter To Restart';
+                    message.innerHTML = 'Partida terminada'.fontcolor('red') + '<br>Presiona Enter para un nuevo intento';
                     message.classList.add('messageStyle');
                     img.style.display = 'none';
                     sound_die.play();
@@ -127,4 +127,3 @@ function play(){
     }
     requestAnimationFrame(create_pipe);
 }
-
