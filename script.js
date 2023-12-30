@@ -43,7 +43,7 @@ document.addEventListener('touchstart', () => {
         play();
     }
 });
-
+let bird_dy = 0;
 bird.addEventListener('touchstart', (e) => {
     if (game_state != 'Play') return;
 
