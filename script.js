@@ -1,4 +1,4 @@
-let move_speed = 3, grativy = 0.5;
+let move_speed = 3, gravity = 0.5;
 let bird = document.querySelector('.bird');
 let img = document.getElementById('bird-1');
 let sound_point = new Audio('sounds effect/point.mp3');
@@ -7,7 +7,7 @@ let sound_die = new Audio('sounds effect/die.mp3');
 // getting bird element properties
 let bird_props = bird.getBoundingClientRect();
 
-// This method returns DOMReact -> top, right, bottom, left, x, y, width and height
+// This method returns DOMRect -> top, right, bottom, left, x, y, width and height
 let background = document.querySelector('.background').getBoundingClientRect();
 
 let score_val = document.querySelector('.score_val');
@@ -33,6 +33,23 @@ document.addEventListener('keydown', (e) => {
         message.classList.remove('messageStyle');
         play();
     }
+});
+
+document.addEventListener('touchstart', (e) => {
+    if (game_state != 'Play') return;
+
+    const touchY = e.touches[0].pageY;
+
+    if (touchY > bird_props.top) {
+        img.src = 'images/Bird-2.png';
+        bird_dy = -7.6;
+    } else {
+        bird_dy = 7.6;
+    }
+});
+
+document.addEventListener('touchend', () => {
+    img.src = 'images/Bird.png';
 });
 
 function play(){
@@ -70,19 +87,7 @@ function play(){
     let bird_dy = 0;
     function apply_gravity(){
         if(game_state != 'Play') return;
-        bird_dy = bird_dy + grativy;
-        document.addEventListener('keydown', (e) => {
-            if(e.key == 'ArrowUp' || e.key == ' '){
-                img.src = 'images/Bird-2.png';
-                bird_dy = -7.6;
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if(e.key == 'ArrowUp' || e.key == ' '){
-                img.src = 'images/Bird.png';
-            }
-        });
+        bird_dy = Math.max(-7.6, Math.min(7.6, bird_dy + gravity));
 
         if(bird_props.top <= 0 || bird_props.bottom >= background.bottom){
             game_state = 'End';
@@ -97,15 +102,15 @@ function play(){
     }
     requestAnimationFrame(apply_gravity);
 
-    let pipe_seperation = 0;
+    let pipe_separation = 0;
 
     let pipe_gap = 35;
 
     function create_pipe(){
         if(game_state != 'Play') return;
 
-        if(pipe_seperation > 115){
-            pipe_seperation = 0;
+        if(pipe_separation > 115){
+            pipe_separation = 0;
 
             let pipe_posi = Math.floor(Math.random() * 43) + 8;
             let pipe_sprite_inv = document.createElement('div');
@@ -122,7 +127,7 @@ function play(){
 
             document.body.appendChild(pipe_sprite);
         }
-        pipe_seperation++;
+        pipe_separation++;
         requestAnimationFrame(create_pipe);
     }
     requestAnimationFrame(create_pipe);
