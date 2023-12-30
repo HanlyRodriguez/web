@@ -35,12 +35,13 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-document.addEventListener('touchstart', (e) => {
+bird.addEventListener('touchstart', (e) => {
     if (game_state != 'Play') return;
 
     const touchY = e.touches[0].pageY;
+    const birdTop = bird_props.top + window.pageYOffset;
 
-    if (touchY > bird_props.top) {
+    if (touchY > birdTop) {
         img.src = 'images/Bird-2.png';
         bird_dy = -7.6;
     } else {
@@ -48,7 +49,7 @@ document.addEventListener('touchstart', (e) => {
     }
 });
 
-document.addEventListener('touchend', () => {
+bird.addEventListener('touchend', () => {
     img.src = 'images/Bird.png';
 });
 
@@ -88,15 +89,18 @@ function play(){
     function apply_gravity(){
         if(game_state != 'Play') return;
         bird_dy = Math.max(-7.6, Math.min(7.6, bird_dy + gravity));
+        
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        let birdTop = bird_props.top + scrollY;
 
-        if(bird_props.top <= 0 || bird_props.bottom >= background.bottom){
+        if(birdTop <= 0 || birdTop + bird_props.height >= background.bottom){
             game_state = 'End';
             message.style.left = '28vw';
             window.location.reload();
             message.classList.remove('messageStyle');
             return;
         }
-        bird.style.top = bird_props.top + bird_dy + 'px';
+        bird.style.top = birdTop + bird_dy + 'px';
         bird_props = bird.getBoundingClientRect();
         requestAnimationFrame(apply_gravity);
     }
@@ -132,3 +136,4 @@ function play(){
     }
     requestAnimationFrame(create_pipe);
 }
+
